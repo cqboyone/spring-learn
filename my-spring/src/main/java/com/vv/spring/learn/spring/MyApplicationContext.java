@@ -29,7 +29,17 @@ public class MyApplicationContext {
                     if (path.endsWith(".class")) {
                         try {
                             String replace = path.replace(File.separator, "/");
-                            String urlPath = classLoader.getResource("").getPath().substring(1);
+                            String urlPath;
+                            //判断操作系统
+                            String osName = System.getProperty("os.name");
+                            if (osName.startsWith("Windows")) {
+                                // windows
+                                urlPath = classLoader.getResource("").getPath().substring(1);
+                            } else {
+                                // unix or linux or mac os
+                                urlPath = classLoader.getResource("").getPath();
+                            }
+
                             String substring = replace.substring(urlPath.length(), replace.indexOf(".class"));
                             String classPath = substring.replace("/", ".");
 
